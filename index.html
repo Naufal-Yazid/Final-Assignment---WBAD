@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rental Mobil - ABC</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="head-content">Rental Mobil ABC</h1>
+
+      <h2>Daftar Mobil Tersedia</h2>
+      <div class="car-list" id="carList">
+        <!-- Mobil akan diisi oleh JavaScript -->
+      </div>
+
+      <div class="customer-form">
+        <h2>Formulir Pelanggan</h2>
+        <div class="validation-summary" id="validationSummary"></div>
+
+        <div class="form-group">
+          <input type="text" id="customerName" placeholder="Nama Pelanggan" required />
+          <div class="error-message" id="customerNameError">Nama pelanggan harus diisi</div>
+        </div>
+
+        <button id="calculateBtn">Hitung Total</button>
+        <button id="saveBtn" style="display: none">Simpan Pemesanan</button>
+
+        <div class="summary" id="summary">
+          <h3>Ringkasan Pemesanan</h3>
+          <div id="summaryItems"></div>
+          <div class="total" id="totalPrice"></div>
+        </div>
+      </div>
+
+      <div class="bookings">
+        <h2>Riwayat Pemesanan</h2>
+        <div id="bookingList">
+          <!-- Daftar pemesanan akan diisi oleh JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
