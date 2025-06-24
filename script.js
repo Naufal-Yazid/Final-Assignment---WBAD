@@ -1,4 +1,3 @@
-// Data mobil
 const cars = [
   {
     id: 1,
@@ -26,7 +25,6 @@ const cars = [
   },
 ];
 
-// Variabel global untuk menyimpan data pemesanan sementara
 let currentBooking = {
   customerName: "",
   items: [],
@@ -34,7 +32,6 @@ let currentBooking = {
   timestamp: "",
 };
 
-// Fungsi untuk menampilkan daftar mobil
 function displayCars() {
   const carListElement = document.getElementById("carList");
   carListElement.innerHTML = "";
@@ -64,7 +61,6 @@ function displayCars() {
   });
 }
 
-// Fungsi untuk menampilkan pesan error
 function showError(elementId, message) {
   const errorElement = document.getElementById(elementId);
   errorElement.textContent = message;
@@ -73,7 +69,6 @@ function showError(elementId, message) {
   inputElement.classList.add("error");
 }
 
-// Fungsi untuk menyembunyikan pesan error
 function hideError(elementId) {
   const errorElement = document.getElementById(elementId);
   errorElement.style.display = "none";
@@ -81,7 +76,6 @@ function hideError(elementId) {
   inputElement.classList.remove("error");
 }
 
-// Fungsi untuk menampilkan summary error
 function showValidationSummary(messages) {
   const validationSummary = document.getElementById("validationSummary");
   if (messages.length > 0) {
@@ -92,12 +86,11 @@ function showValidationSummary(messages) {
   }
 }
 
-// Fungsi untuk validasi form
+// Fungsi validasi form
 function validateForm() {
   let isValid = true;
   const errorMessages = [];
 
-  // Validasi nama pelanggan
   const customerName = document.getElementById("customerName").value.trim();
   if (!customerName) {
     showError("customerNameError", "Nama pelanggan harus diisi");
@@ -107,14 +100,12 @@ function validateForm() {
     hideError("customerNameError");
   }
 
-  // Validasi mobil yang dipilih
   const checkboxes = document.querySelectorAll(".car-checkbox:checked");
   if (checkboxes.length === 0) {
     errorMessages.push("Pilih minimal 1 mobil");
     isValid = false;
   }
 
-  // Validasi tanggal dan durasi untuk mobil yang dipilih
   checkboxes.forEach((checkbox) => {
     const carId = parseInt(checkbox.getAttribute("data-id"));
     const startDate = document.getElementById(`startDate-${carId}`).value;
@@ -142,9 +133,8 @@ function validateForm() {
   return isValid;
 }
 
-// Fungsi untuk menghitung total
+// Menghitung total
 function calculateTotal() {
-  // Reset validasi
   document.querySelectorAll(".error-message").forEach((el) => {
     el.style.display = "none";
   });
@@ -153,7 +143,6 @@ function calculateTotal() {
   });
   document.getElementById("validationSummary").style.display = "none";
 
-  // Validasi form
   if (!validateForm()) {
     return;
   }
@@ -188,11 +177,10 @@ function calculateTotal() {
     currentBooking.total += subtotal;
   });
 
-  // Tampilkan ringkasan
   displaySummary();
 }
 
-// Fungsi untuk menampilkan ringkasan
+// Menampilkan ringkasan
 function displaySummary() {
   const summaryElement = document.getElementById("summary");
   const summaryItemsElement = document.getElementById("summaryItems");
@@ -216,26 +204,21 @@ function displaySummary() {
   saveBtn.style.display = "inline-block";
 }
 
-// Fungsi untuk menyimpan pemesanan
+// Menyimpan pemesanan
 function saveBooking() {
   if (currentBooking.items.length === 0) {
     return;
   }
 
-  // Tambahkan timestamp
   const now = new Date();
   currentBooking.timestamp = now.toLocaleString();
 
-  // Ambil data dari localStorage atau buat array kosong jika belum ada
   let bookings = JSON.parse(localStorage.getItem("carRentals")) || [];
 
-  // Tambahkan pemesanan baru
   bookings.push(currentBooking);
 
-  // Simpan ke localStorage
   localStorage.setItem("carRentals", JSON.stringify(bookings));
 
-  // Reset form
   document.getElementById("customerName").value = "";
   document.querySelectorAll(".car-checkbox").forEach((cb) => (cb.checked = false));
   document.querySelectorAll(".start-date").forEach((input) => (input.value = ""));
@@ -243,22 +226,19 @@ function saveBooking() {
   document.getElementById("summary").style.display = "none";
   document.getElementById("saveBtn").style.display = "none";
 
-  // Perbarui tampilan riwayat pemesanan
   displayBookings();
 
-  // Tampilkan notifikasi sukses
   const validationSummary = document.getElementById("validationSummary");
   validationSummary.innerHTML = '<strong style="color: #2a6496;">Pemesanan berhasil disimpan!</strong>';
   validationSummary.style.display = "block";
   validationSummary.style.backgroundColor = "#e9f7ef";
 
-  // Sembunyikan notifikasi setelah 3 detik
   setTimeout(() => {
     validationSummary.style.display = "none";
   }, 3000);
 }
 
-// Fungsi untuk menampilkan riwayat pemesanan
+// Menampilkan riwayat pemesanan
 function displayBookings() {
   const bookingListElement = document.getElementById("bookingList");
   bookingListElement.innerHTML = "";
@@ -270,7 +250,6 @@ function displayBookings() {
     return;
   }
 
-  // Urutkan dari yang terbaru
   bookings.reverse().forEach((booking, index) => {
     const bookingCard = document.createElement("div");
     bookingCard.className = "booking-card";
@@ -291,7 +270,6 @@ function displayBookings() {
     bookingListElement.appendChild(bookingCard);
   });
 
-  // Tambahkan event listener untuk tombol hapus
   document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", function () {
       const index = parseInt(this.getAttribute("data-index"));
@@ -300,7 +278,6 @@ function displayBookings() {
   });
 }
 
-// Fungsi untuk menghapus pemesanan
 function deleteBooking(index) {
   let bookings = JSON.parse(localStorage.getItem("carRentals")) || [];
 
@@ -313,7 +290,6 @@ function deleteBooking(index) {
   }
 }
 
-// Event listeners
 document.addEventListener("DOMContentLoaded", function () {
   displayCars();
   displayBookings();
@@ -321,7 +297,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("calculateBtn").addEventListener("click", calculateTotal);
   document.getElementById("saveBtn").addEventListener("click", saveBooking);
 
-  // Validasi real-time untuk nama pelanggan
   document.getElementById("customerName").addEventListener("input", function () {
     if (this.value.trim()) {
       hideError("customerNameError");
