@@ -193,7 +193,7 @@ function displaySummary() {
     const summaryItem = document.createElement("div");
     summaryItem.className = "summary-item";
     summaryItem.innerHTML = `
-                    <span>${item.carName} (${item.duration} hari @ Rp ${item.pricePerDay.toLocaleString()})</span>
+                    <span>${item.carName} (${item.duration} hari Rp ${item.pricePerDay.toLocaleString()})</span>
                     <span>Rp ${item.subtotal.toLocaleString()}</span>
                 `;
     summaryItemsElement.appendChild(summaryItem);
